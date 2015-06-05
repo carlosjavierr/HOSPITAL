@@ -419,7 +419,9 @@ public class Principal extends JFrame {
 		mntmPorSexo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (listaEmpleados.size()!=0){
-					EspecialistaGui especialistaGui2 = new EspecialistaGui(listaEmpleados,10,gestion,listaEmpleados);
+					ListaEmpleados lista_especialistas = new ListaEmpleados();
+					lista_especialistas=Dame_Especialista(listaEmpleados);
+					EspecialistaGui especialistaGui2 = new EspecialistaGui(lista_especialistas,10,gestion,listaEmpleados);
 					especialistaGui2.setTitle("Consultar Especialistas por Sexo");
 					especialistaGui2.setVisible(true);
 				}else
@@ -687,14 +689,14 @@ public class Principal extends JFrame {
 							especialista1 =  (Especialista) listaEmpleados.get(i+1);
 						}
 					}
-					JOptionPane.showMessageDialog(null,"\nEl empleado con mayor antiguedad es: "+especialista1.getDni() +
-							"\n " + especialista1.getNombre() + " "+ especialista1.getApellidos() +"\n ","!!!",JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(null,"\nEl empleado con mayor antiguedad es: "+"\n"+"dni: "+especialista1.getDni() +
+							 "\n"+"Nombre: "+ especialista1.getNombre() +"\n"+ "Apellido:  " +especialista1.getApellidos() +"\n ","!!!",JOptionPane.OK_OPTION);
 				}else{
 					Especialista especialista1;
 					especialista1 = (Especialista) listaEmpleados.get(0);
 					
-					JOptionPane.showMessageDialog(null,"\nEl empleado con mayor antiguedad es: "+especialista1.getDni() +
-							"\n " + especialista1.getNombre() + " "+ especialista1.getApellidos() +"\n ","!!!",JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(null,"\nEl empleado con mayor antiguedad es: "+"\n"+"dni: "+especialista1.getDni() +
+							 "\n"+"Nombre: "+ especialista1.getNombre() +"\n"+ "Apellido:  " +especialista1.getApellidos() +"\n ","!!!",JOptionPane.OK_OPTION);
 				}
 			}
 		});

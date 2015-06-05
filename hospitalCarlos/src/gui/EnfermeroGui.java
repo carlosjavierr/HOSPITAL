@@ -27,7 +27,9 @@ import hospitalCarlos.Sexo;
  */
 public class EnfermeroGui extends JFrame {
 
-	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldDni;
@@ -59,13 +61,18 @@ public class EnfermeroGui extends JFrame {
 		Especialista uno;
 		Especialista dos;
 		if (le.size()!=0){
-			for (i=0;i<=le.size()-2;i++){
+			for (i=0;i<=le.size()-1;i++){
 				for (j=0;j<=le.size()-2-i;j++){
 					uno = (Especialista) le.devolver(j);
 					dos = (Especialista) le.devolver(j+1);
 					if (uno.getDiasTrabajados()>=dos.getDiasTrabajados()){
 						ml.annadir(uno);
 						ml.annadir(dos);
+					}
+					else
+					{
+						ml.annadir(dos);
+						ml.annadir(uno);
 					}
 				}
 			}
@@ -213,11 +220,12 @@ public class EnfermeroGui extends JFrame {
 				if (i==16){                                                              // Muestra por antiguedad - Boton Siguiente  -16
 				
 					milista = ordenar(listaEmpleados);
+					System.out.println(milista.size());
 					Especialista especialista2;
 					if (milista.size()!=0){
 					
 						
-						if (indice_aux>=0 && indice_aux<milista.size()-1){
+						if (indice_aux<milista.size()-1){
 						
 							indice_aux++;
 							especialista2=(Especialista) milista.get(indice_aux);

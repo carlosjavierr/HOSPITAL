@@ -94,6 +94,10 @@ public class EspecialistaGui extends JFrame {
 						ml.annadir(uno);
 						ml.annadir(dos);
 					}
+					else{
+						ml.annadir(uno);
+						ml.annadir(dos);
+					}
 				}
 			}
 			return ml;

@@ -38,6 +38,8 @@ public class AtsGui extends JFrame {
 	private JTextField textFieldAnti;
 	private int indice;
 	private int a=0;
+	ListaEmpleados atsaux = new ListaEmpleados();
+	private int indice_aux_1=0;
 	private JTextField textFieldDniEliminar;
 	private JTextField textField;
 	private ListaEmpleados milista = new ListaEmpleados();
@@ -83,7 +85,7 @@ public class AtsGui extends JFrame {
 		Especialista dos;
 		if (le.size()!=0)
 		{
-			for (i=0;i<=le.size()-2;i++)
+			for (i=0;i<=le.size()-1;i++)
 			{
 				for (j=0;j<=le.size()-2-i;j++)
 				{
@@ -93,6 +95,11 @@ public class AtsGui extends JFrame {
 					{
 						ml.annadir(uno);
 						ml.annadir(dos);
+					}
+					else
+					{
+						ml.annadir(dos);
+						ml.annadir(uno);
 					}
 				}
 			}
@@ -221,6 +228,7 @@ public class AtsGui extends JFrame {
 		dateChooser_2.setBounds(138, 210, 95, 20);
 		contentPane.add(dateChooser_2);
 		
+		indice_aux_1= listaEmpleados.size()-1;
 		
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(Sexo.values()));
@@ -248,7 +256,7 @@ public class AtsGui extends JFrame {
 		final JButton btnNewButtonAnnadir = new JButton("Siguiente");
 		btnNewButtonAnnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ListaEmpleados atsaux = new ListaEmpleados();
+				
 				if (i==16)                                               // Mostrar por antiguedad.
 				{
 					atsaux=ordenar(listaEmpleados);
@@ -256,20 +264,20 @@ public class AtsGui extends JFrame {
 					if (atsaux!=null)
 					{
 
-						if (indice_aux<atsaux.size()-1){
+						if (indice_aux<=atsaux.size()-1){
 							
 						
 						Especialista aux=new Especialista("a");
-						indice_aux++;
-						aux = (Especialista) atsaux.devolver(indice_aux);
 						
+						aux = (Especialista) atsaux.devolver(indice_aux);
+						indice_aux++;
 						asignarDatos(aux);
 						}
 						
 					}
 					
 					
-					if (indice_aux>=atsaux.size()-1)
+					if (indice_aux>atsaux.size()-1)
 					{
 						indice_aux=atsaux.size()-1;
 						a=1;
@@ -425,33 +433,57 @@ public class AtsGui extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				ListaEmpleados atsaux = new ListaEmpleados();
 				
-				if (i==16)
+				if (i==16)                                               // Mostrar por antiguedad.
 				{
+					
 					atsaux=ordenar(listaEmpleados);
-					                                                         // Mostrar por antiguedad    - 16
+					System.out.println(listaEmpleados.size());
+					System.out.println(atsaux.size());
+					System.out.println("Tamaño "+atsaux.size());
 					if (atsaux!=null)
 					{
-						if (indice_aux>0)
-						{
-							Especialista aux=new Especialista("a");
-							indice_aux--;
-							aux = (Especialista) atsaux.devolver(indice_aux);
-						
+						System.out.println("Indice: "+indice_aux_1);
+						if (indice_aux_1>0){
+							indice_aux_1--;	
+//							if (a==1)
+//							{
+//								indice_aux_1--;
+//								a=0;
+//							}
+							Especialista aux;
+							
+							aux = (Especialista) atsaux.devolver(indice_aux_1);
+							
 							asignarDatos(aux);
+							
+							
+						
+						
+						}
+						else
+						{
+							System.out.println(indice_aux);
+							indice_aux_1=0;
+							Especialista aux;
+							
+							aux = (Especialista) atsaux.devolver(indice_aux_1);
+							
+							asignarDatos(aux);
+							indice_aux=0;
+							a=1;
+							JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 						}
 						
-
 					}
-					if (indice_aux<=0)
-					{
-						indice_aux=0;
-						a=1;
-						JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
-					}
+					
+					
+					
 					
 					
 					
 				}
+					
+				
 				if (i==15) {															 // Mostrar por especialidad   - 15
 					milista.cero();
 					milista = cargarlista(listaEmpleados,comboBox_3.getSelectedItem().toString());
