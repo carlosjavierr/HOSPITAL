@@ -116,7 +116,7 @@ public class EspecialistaGui extends JFrame {
 	 * 			Representia si se ha modificado o no
 	 * @param l
 	 * 				Represneta la lista de Empleados
-	 * @wbp.parser.constructor
+	 * 
 	 */
 	public EspecialistaGui(final ListaEmpleados listaEmpleados, final int i, final Gestion g, final ListaEmpleados l) {
 	

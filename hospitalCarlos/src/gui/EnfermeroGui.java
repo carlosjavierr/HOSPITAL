@@ -91,7 +91,7 @@ public class EnfermeroGui extends JFrame {
 	 * 							Representa si se ha modificao o no
 	 * @param l
 	 * 							Representa una lista de empleados
-	 * @wbp.parser.constructor
+	 * 
 	 */
 	public EnfermeroGui(final ListaEmpleados listaEmpleados, final int i, final Gestion gestion, final ListaEmpleados l) {
 		

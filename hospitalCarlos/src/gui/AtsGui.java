@@ -119,7 +119,7 @@ public class AtsGui extends JFrame {
 	 * 						Representa si se ha modifica do o no 
 	 * @param l
 	 * 						Representa la lista de empleados
-	 * @wbp.parser.constructor
+	 * 
 	 */
 	public AtsGui(final ListaEmpleados listaEmpleados, final int i, final Gestion gestion, final ListaEmpleados l) {
 		indice =0;
