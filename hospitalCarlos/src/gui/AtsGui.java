@@ -1,6 +1,4 @@
 package gui;
-
-
 import hospitalCarlos.Especialista;
 import hospitalCarlos.Gestion;
 import hospitalCarlos.ListaEmpleados;
@@ -9,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -18,21 +15,20 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-
 import com.toedter.calendar.JDateChooser;
-
-
+import expceciones.CorreoNoValidoException;
+import expceciones.DniNoValidoException;
 import javax.swing.DefaultComboBoxModel;
-
 import hospitalCarlos.Sexo;
 import hospitalCarlos.AtsEspecialidad;
 /**
  * 
  * @author Carlos Javier Garcia Escribano
- *
+ * @version 1.0
  */
 public class AtsGui extends JFrame {
-
+	
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldDni;
 	private JTextField textFieldNomb;
@@ -46,18 +42,14 @@ public class AtsGui extends JFrame {
 	private JTextField textField;
 	private ListaEmpleados milista = new ListaEmpleados();
 	int indice_aux=0;
-
 	/**
-	 * Launch the application.
+	 * Devuelve una lista de empleados dependiendo de su especialidad que coincida con aux(especialidad)
+	 * @param le
+	 * 				Rerpesenta la lista de Empleados
+	 * @param aux	
+	 * 				Representa la Especialidad
+	 * @return un arrayList de empleados
 	 */
-
-
-	/**
-	 * 
-	 * Create the frame.
-	 * @wbp.parser.constructor
-	 */
-	
 	public ListaEmpleados cargarlista(ListaEmpleados le,String aux)
 	{
 		ListaEmpleados ml = new ListaEmpleados();
@@ -76,23 +68,29 @@ public class AtsGui extends JFrame {
 			return null;
 	}
 	
-	/**
-	 * Este medodo ordena de mayor a menor
-	 * @wbp.parser.constructor
-	 */
 	
+	/**
+	 * Devuelve una lista de empleados ordenada de menor a mayor; En caso de no poder ordenar devuelve nulo.
+	 * @param le
+	 * 				Representa la lista de empleados
+	 * @return lista de empleados
+	 */
 	public ListaEmpleados ordenar(ListaEmpleados le)
 	{
-		int i,j;
+		int i,j,aux;
 		ListaEmpleados ml = new ListaEmpleados();
 		Especialista uno;
 		Especialista dos;
-		if (le.size()!=0){
-			for (i=0;i<=le.size()-2;i++){
-				for (j=0;j<=le.size()-2-i;j++){
+		if (le.size()!=0)
+		{
+			for (i=0;i<=le.size()-2;i++)
+			{
+				for (j=0;j<=le.size()-2-i;j++)
+				{
 					uno = (Especialista) le.devolver(j);
 					dos = (Especialista) le.devolver(j+1);
-					if (uno.getDiasTrabajados()>=dos.getDiasTrabajados()){
+					if (uno.getDiasTrabajados()>=dos.getDiasTrabajados())
+					{
 						ml.annadir(uno);
 						ml.annadir(dos);
 					}
@@ -105,11 +103,16 @@ public class AtsGui extends JFrame {
 	}
 	
 	/**
-	 * Se utiliza para la baja y consultas, menos para la alta de Ats
+	 * Constructor de AtsGui
 	 * @param listaEmpleados
+	 * 						Representa la lista de empleados
 	 * @param i
+	 * 						Representa
 	 * @param gestion
+	 * 						Representa si se ha modifica do o no 
 	 * @param l
+	 * 						Representa la lista de empleados
+	 * @wbp.parser.constructor
 	 */
 	public AtsGui(final ListaEmpleados listaEmpleados, final int i, final Gestion gestion, final ListaEmpleados l) {
 		indice =0;
@@ -122,11 +125,11 @@ public class AtsGui extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(22, 78, 73, 14);
+		lblNombre.setBounds(201, 56, 220, 14);
 		contentPane.add(lblNombre);
 		
 		JLabel lblApellidos = new JLabel("Apellidos");
-		lblApellidos.setBounds(22, 103, 63, 14);
+		lblApellidos.setBounds(10, 78, 63, 14);
 		contentPane.add(lblApellidos);
 		
 		JLabel lblDni = new JLabel("Dni");
@@ -134,15 +137,15 @@ public class AtsGui extends JFrame {
 		contentPane.add(lblDni);
 		
 		JLabel lblDireccion = new JLabel("Direccion");
-		lblDireccion.setBounds(233, 53, 60, 14);
+		lblDireccion.setBounds(10, 106, 60, 14);
 		contentPane.add(lblDireccion);
 		
 		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setBounds(233, 78, 60, 14);
+		lblEmail.setBounds(10, 131, 60, 14);
 		contentPane.add(lblEmail);
 		
 		JLabel lblSexo = new JLabel("Sexo");
-		lblSexo.setBounds(233, 106, 60, 14);
+		lblSexo.setBounds(233, 130, 60, 14);
 		contentPane.add(lblSexo);
 		
 		JLabel lblNewLabel_1 = new JLabel("Antiguedad");
@@ -150,30 +153,30 @@ public class AtsGui extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		textFieldDni = new JTextField();
-		textFieldDni.setBounds(92, 50, 116, 20);
+		textFieldDni.setBounds(80, 47, 100, 20);
 		contentPane.add(textFieldDni);
 		textFieldDni.setColumns(10);
 	
 		textFieldNomb = new JTextField();
 		textFieldNomb.setColumns(10);
-		textFieldNomb.setBounds(92, 78, 116, 20);
+		textFieldNomb.setBounds(259, 53, 162, 20);
 		contentPane.add(textFieldNomb);
 		
 		
 		textFieldApell = new JTextField();
 		textFieldApell.setColumns(10);
-		textFieldApell.setBounds(95, 103, 113, 20);
+		textFieldApell.setBounds(80, 75, 341, 20);
 		contentPane.add(textFieldApell);
 		
 		textFieldDirecc = new JTextField();
 		textFieldDirecc.setColumns(10);
-		textFieldDirecc.setBounds(303, 50, 118, 20);
+		textFieldDirecc.setBounds(80, 103, 341, 20);
 		contentPane.add(textFieldDirecc);
 		
 
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
-		textFieldEmail.setBounds(303, 75, 118, 20);
+		textFieldEmail.setBounds(80, 128, 118, 20);
 		contentPane.add(textFieldEmail);
 		
 		
@@ -186,47 +189,47 @@ public class AtsGui extends JFrame {
 		final JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setEditable(true);
 		comboBox_1.setModel(new DefaultComboBoxModel(AtsEspecialidad.values()));
-		comboBox_1.setBounds(303, 128, 118, 20);
+		comboBox_1.setBounds(303, 154, 118, 20);
 		contentPane.add(comboBox_1);
 		
 		JLabel label = new JLabel("Fecha Nacimiento");
-		label.setBounds(22, 131, 88, 14);
+		label.setBounds(10, 160, 100, 14);
 		contentPane.add(label);
 		
 		final JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("dd/MM/yyyy");
-		dateChooser.setBounds(122, 134, 95, 20);
+		dateChooser.setBounds(118, 159, 95, 20);
 		contentPane.add(dateChooser);
 		
 		
 		final JDateChooser dateChooser_1 = new JDateChooser();
 		dateChooser_1.setDateFormatString("dd/MM/yyyy");
-		dateChooser_1.setBounds(128, 182, 95, 20);
+		dateChooser_1.setBounds(118, 187, 95, 20);
 		contentPane.add(dateChooser_1);
 		
 		
 		JLabel label_1 = new JLabel("Fecha Contratacion");
-		label_1.setBounds(22, 187, 118, 14);
+		label_1.setBounds(10, 188, 118, 14);
 		contentPane.add(label_1);
 		
 		JLabel label_2 = new JLabel("Fecha Fin Contratacion");
-		label_2.setBounds(22, 213, 140, 14);
+		label_2.setBounds(10, 210, 140, 14);
 		contentPane.add(label_2);
 		
 		final JDateChooser dateChooser_2 = new JDateChooser();
 		dateChooser_2.setDateFormatString("dd/MM/yyyy");
-		dateChooser_2.setBounds(156, 213, 95, 20);
+		dateChooser_2.setBounds(138, 210, 95, 20);
 		contentPane.add(dateChooser_2);
 		
 		
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(Sexo.values()));
-		comboBox.setBounds(303, 99, 118, 22);
+		comboBox.setBounds(303, 127, 118, 22);
 		contentPane.add(comboBox);
 		
 		
 		JLabel lblTipo = new JLabel("Tipo");
-		lblTipo.setBounds(233, 134, 46, 14);
+		lblTipo.setBounds(233, 157, 46, 14);
 		contentPane.add(lblTipo);
 		
 		final JComboBox comboBox_2 = new JComboBox();
@@ -246,14 +249,16 @@ public class AtsGui extends JFrame {
 		btnNewButtonAnnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ListaEmpleados atsaux = new ListaEmpleados();
-				/**
-				 * Boton Siguente, Muestrar por especialidad
-				 */
-				if (i==16){
+				if (i==16)                                               // Mostrar por antiguedad.
+				{
 					atsaux=ordenar(listaEmpleados);
-					// Mostrar por antiguedad.
-					if (atsaux!=null){
-						if (indice_aux<atsaux.size()-1){	
+					
+					if (atsaux!=null)
+					{
+
+						if (indice_aux<atsaux.size()-1){
+							
+						
 						Especialista aux=new Especialista("a");
 						indice_aux++;
 						aux = (Especialista) atsaux.devolver(indice_aux);
@@ -262,46 +267,46 @@ public class AtsGui extends JFrame {
 						}
 						
 					}
-					if (indice_aux>=atsaux.size()-1){
+					
+					
+					if (indice_aux>=atsaux.size()-1)
+					{
 						indice_aux=atsaux.size()-1;
 						a=1;
 						JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 					}
+					
+					
+					
 				}
-				/**
-				 * Boton Siguente, Muestrar por Sexo
-				 */
-				if(i == 10)   
-				{
+				if(i == 10)  { 															 // Mostrar por Sexo
+
 					Especialista especialista2;
 					indice++;
-//					especialista2 = (Especialista) listaEmpleados.devolver(indice);
-//					asignarDatos(especialista2);
 					int h = 0;
 					
 					while(indice<=listaEmpleados.size()-1 && h==0){
-						
 						especialista2 = (Especialista) listaEmpleados.devolver(indice);
-						if(especialista2.getSexo().compareTo(comboBox_2.getSelectedItem().toString())==0){
+						if(especialista2.getSexo().compareTo(comboBox_2.getSelectedItem().toString())==0)
+						{
 							h = 1;
 							asignarDatos(especialista2);
 							
-						}else
+						}
+						else
 							indice++;	
 					}
 					
-					if (indice>listaEmpleados.size()-1){
+					if (indice>listaEmpleados.size()-1)
+					{
 						indice=listaEmpleados.size()-1;
 						a=1;
 						JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 					}
 					
 				}
-				/**
-				 * Boton Siguente, Muestrar por especialidad del Ats(URGENCIAS / NOURGENCIAS)
-				 */
-				if (i==15)    
-				{
+				if (i==15){    															// Mostrar por Especialidad
+				
 					
 					milista.cero();
 					milista = cargarlista(listaEmpleados,comboBox_3.getSelectedItem().toString());
@@ -327,18 +332,15 @@ public class AtsGui extends JFrame {
 							
 						}else{
 							indice = milista.size()-1;
-							JOptionPane.showMessageDialog(null,"\n No hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 						}
 						
 					}else{
-						JOptionPane.showMessageDialog(null,"\n No hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 					}
 				}
-				/**
-				 * Boton Siguiente, Muestra todos los Ats || Muestra la nomina de loas Ats
-				 */
 				if(i==14 || i==17)
-				{                                                      
+				{                                                      					//Muestra Todos
 					if(indice < listaEmpleados.size()-1)
 					{
 						
@@ -361,7 +363,8 @@ public class AtsGui extends JFrame {
 						
 					
 					}
-					else{
+					else
+					{
 					
 						indice=listaEmpleados.size()-1;
 						a=1;
@@ -370,8 +373,9 @@ public class AtsGui extends JFrame {
 				}
 			}
 				/**
-				 * Asigna datos
+				 *  Asignar a los textField, comboBox  y dateChooser los datos que contiene ats2
 				 * @param ats2
+				 * 				Representa un ats
 				 */
 				private void asignarDatos(Especialista ats2) {
 					textFieldDni.setText(ats2.getDni());
@@ -390,18 +394,19 @@ public class AtsGui extends JFrame {
 				
 					}
 					switch(ats2.getEspe()){
-						case "URGENCIAS":
-							comboBox_1.setSelectedIndex(0);
-							break;
-						case "NOURGENCIAS":
-							comboBox_1.setSelectedIndex(1);
-							break;
+					case "URGENCIAS":
+						comboBox_1.setSelectedIndex(0);
+						break;
+					case "NOURGENCIAS":
+						comboBox_1.setSelectedIndex(1);
+						break;
+				
 					}
 					SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 					try{
-						dateChooser.setDate(formato.parse(ats2.getfNacimiento()));
-						dateChooser_1.setDate(formato.parse(ats2.getFAlta()));
-						dateChooser_2.setDate(formato.parse(ats2.getFBaja()));
+					dateChooser.setDate(formato.parse(ats2.getfNacimiento()));
+					dateChooser_1.setDate(formato.parse(ats2.getFAlta()));
+					dateChooser_2.setDate(formato.parse(ats2.getFBaja()));
 					}catch (ParseException ex){
 						ex.printStackTrace();
 					}
@@ -409,7 +414,7 @@ public class AtsGui extends JFrame {
 				}
 		
 			});
-		btnNewButtonAnnadir.setBounds(352, 244, 89, 23);
+		btnNewButtonAnnadir.setBounds(352, 238, 89, 23);
 		contentPane.add(btnNewButtonAnnadir);
 		
 		
@@ -420,13 +425,10 @@ public class AtsGui extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				ListaEmpleados atsaux = new ListaEmpleados();
 				
-				/**
-				 * Boton anterio, Antiguedad anterior
-				 */
 				if (i==16)
 				{
 					atsaux=ordenar(listaEmpleados);
-					                                                         // Mostrar por antiguedad.
+					                                                         // Mostrar por antiguedad    - 16
 					if (atsaux!=null)
 					{
 						if (indice_aux>0)
@@ -450,12 +452,7 @@ public class AtsGui extends JFrame {
 					
 					
 				}
-				/**
-				 * Boton Anterior, Especialidad(URGENCIAS / NOURGENCIAS) Ats
-				 */
-				if (i==15)    
-				{
-					
+				if (i==15) {															 // Mostrar por especialidad   - 15
 					milista.cero();
 					milista = cargarlista(listaEmpleados,comboBox_3.getSelectedItem().toString());
 					
@@ -463,9 +460,8 @@ public class AtsGui extends JFrame {
 						Especialista ats2 =  new Especialista("a");
 						int x=0;						
 						if(indice>=0){
-						ats2 = (Especialista) milista.get(indice);
-						asignarDatos(ats2);
-
+							ats2 = (Especialista) milista.get(indice);
+							asignarDatos(ats2);
 						}
 						while(indice>0 && x==0){
 							indice--;
@@ -473,75 +469,53 @@ public class AtsGui extends JFrame {
 							if(ats2.getEspe().compareTo(comboBox_3.getSelectedItem().toString())==0){
 								x=1;
 							}
-							
 						}
 						if(x==1){
-							asignarDatos(ats2);
-							
+							asignarDatos(ats2);	
 						}else{
 							if (indice<0)
 							indice = 0;
 							JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 						}
-						
 					}else{
 						JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 					}
 				}
-				/**
-				 * Boton Anterior, Sexo Ats
-				 */
-				if(i == 10)  
-				{
-					
+				if(i == 10){  																	// Mostrar por Sexo   -   10
 					Especialista especialista2;
 					indice--;
-//					especialista2 = (Especialista) listaEmpleados.devolver(indice);
-//					asignarDatos(especialista2);
 					int h = 0;
-					
-					while(indice>=0 && h==0)
-					{
-						
+					while(indice>=0 && h==0){	
 						especialista2 = (Especialista) listaEmpleados.devolver(indice);
-						if(especialista2.getSexo().compareTo(comboBox_2.getSelectedItem().toString())==0)
-						{
+						if(especialista2.getSexo().compareTo(comboBox_2.getSelectedItem().toString())==0){
 							h = 1;
-							asignarDatos(especialista2);
-							
+							asignarDatos(especialista2);	
 						}
 						else
 							indice--;	
 					}
-					
-					if (indice<0)
-					{
+					if (indice<0){
 						indice=0;
 						a=1;
 						JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 					}
 				}
-				/**
-				 * Boton Anterior, 14- Muestra Todos || 17- Muestra Nomina
-				 */
 				if(i == 14 || i==17){
 						if(indice > 0){
 							indice--;
 							Especialista ats2 = new Especialista("a");
-						
 							ats2 = (Especialista) listaEmpleados.devolver(indice);
-							
 							resetear(comboBox,comboBox_1,dateChooser,dateChooser_1,dateChooser_2);
 							asignarDatos(ats2);
-						
 							textField.setText(Float.toString(ats2.nomina()));
 							if (ats2.getDiasTrabajados()>365){
-								JOptionPane.showMessageDialog(null,"\nEste ats tiene en nómina +25%","!!!",JOptionPane.WARNING_MESSAGE);
-								
+								JOptionPane.showMessageDialog(null,"\nEste ats tiene en nómina +25%","!!!",JOptionPane.WARNING_MESSAGE);	
 								textField.setText(Float.toString(((ats2.nomina()*25)/100)+ats2.nomina()));
-							}else
+							}
+							else
 								textField.setText(Float.toString(ats2.nomina()));
-						}else{
+						}
+						else{
 							indice=0;
 							a=1;
 							JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
@@ -549,7 +523,11 @@ public class AtsGui extends JFrame {
 					}
 				}
 			
-			
+			/**
+			 *  Asignar a los textField, comboBox  y dateChooser los datos que contiene ats2
+			 * @param ats2
+			 * 				Representa un ats
+			 */
 			private void asignarDatos(Especialista ats2) {
 				textFieldDni.setText(ats2.getDni());
 				textFieldNomb.setText(ats2.getNombre());
@@ -559,29 +537,28 @@ public class AtsGui extends JFrame {
 				textFieldAnti.setText(Integer.toString(ats2.getDiasTrabajados()));//reajustarlo
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				try{
-					dateChooser.setDate(formato.parse(ats2.getfNacimiento()));
-					dateChooser_1.setDate(formato.parse(ats2.getFAlta()));
-					dateChooser_2.setDate(formato.parse(ats2.getFBaja()));
+				dateChooser.setDate(formato.parse(ats2.getfNacimiento()));
+				dateChooser_1.setDate(formato.parse(ats2.getFAlta()));
+				dateChooser_2.setDate(formato.parse(ats2.getFBaja()));
 				}catch (ParseException ex){
 					ex.printStackTrace();
 				}
 				switch(ats2.getSexo()){
-				case "HOMBRE":
-					comboBox.setSelectedIndex(0);
-					break;
-				case "MUJER":
-					comboBox.setSelectedIndex(1);
-					break;
+					case "HOMBRE":
+						comboBox.setSelectedIndex(0);
+						break;
+					case "MUJER":
+						comboBox.setSelectedIndex(1);
+						break;
 				}
 				switch(ats2.getEspe()){
-				case "URGENCIAS":
-					comboBox_1.setSelectedIndex(0);
-					break;
-				case "NOURGENCIAS":
-					comboBox_1.setSelectedIndex(1);
-					break;
-				
-				}
+					case "URGENCIAS":
+						comboBox_1.setSelectedIndex(0);
+						break;
+					case "NOURGENCIAS":
+						comboBox_1.setSelectedIndex(1);
+						break;
+					}
 			}
 		});
 		btnNewButtonAnt.setBounds(119, 244, 89, 23);
@@ -595,27 +572,25 @@ public class AtsGui extends JFrame {
 		JButton btnEliminarrrrr = new JButton("Eliminar");
 		btnEliminarrrrr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Especialista e1 = new Especialista(textFieldDniEliminar.getText());				//textFieldDni.getText(), textField_1Nombre.getText(), textFieldApell.getText(), comboBoxSexo.getSelectedItem().toString(),dateChooserFNaci.toString()	 ,textFieldDirecci.getText(), textFieldEmail.getText(),  0,dateChooserFcontra.toString(),dateChooserFfinContr.toString(),5,true,comboBoxEspecial.getSelectedItem().toString());
+				Especialista e1 = new Especialista(textFieldDniEliminar.getText());				
 				if(listaEmpleados.devolverDni(textFieldDniEliminar.getText()) != null){
 				Especialista e2 = (Especialista) listaEmpleados.devolverDni(textFieldDniEliminar.getText());
 				if (e2.getEspe().compareTo("URGENCIAS")==0 || e2.getEspe().compareTo("NOURGENCIAS")==0){
 					asignarDatos(e2);
-					
-					if(JOptionPane.showOptionDialog(contentPane,"¿Quieres eliminar el Ats?", "--> Confirmar",
-							JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE, null, null, null)==0){
-					
-						listaEmpleados.eliminar(e2);
-						
+					if(JOptionPane.showOptionDialog(contentPane,"¿Quieres eliminar el Ats?", "--> Confirmar",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE, null, null, null)==0){
+						listaEmpleados.eliminar(e2);	
 							gestion.setModificado(true);
 							resetear(comboBox, comboBox_1,dateChooser,dateChooser_1,dateChooser_2);	
 					}
-				}else
+				}
+				else
 				 JOptionPane.showMessageDialog(null,"\nImposible eliminar","!!!",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 			/**
-			 * 
+			 *  Asignar a los textField, comboBox  y dateChooser los datos que contiene especialista2
 			 * @param especialista2
+			 * 						Representa un ats
 			 */
 			private void asignarDatos(Especialista especialista2) {
 				textFieldDni.setText(especialista2.getDni());
@@ -626,9 +601,9 @@ public class AtsGui extends JFrame {
 				textFieldAnti.setText(Integer.toString(especialista2.getDiasTrabajados()));
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				try{
-				dateChooser.setDate(formato.parse(especialista2.getfNacimiento()));
-				dateChooser_1.setDate(formato.parse(especialista2.getFAlta()));
-				dateChooser_2.setDate(formato.parse(especialista2.getFBaja()));
+					dateChooser.setDate(formato.parse(especialista2.getfNacimiento()));
+					dateChooser_1.setDate(formato.parse(especialista2.getFAlta()));
+					dateChooser_2.setDate(formato.parse(especialista2.getFBaja()));
 				}
 				catch (ParseException ex){
 					ex.printStackTrace();
@@ -665,11 +640,11 @@ public class AtsGui extends JFrame {
 		contentPane.add(btnEliminarrrrr);
 		
 		JLabel lblNmina = new JLabel("Nomina");
-		lblNmina.setBounds(245, 171, 46, 14);
+		lblNmina.setBounds(233, 185, 46, 14);
 		contentPane.add(lblNmina);
 		
 		textField = new JTextField();
-		textField.setBounds(304, 168, 73, 20);
+		textField.setBounds(303, 179, 117, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
@@ -718,14 +693,12 @@ public class AtsGui extends JFrame {
 							long diferencia = (fbaja.getTime() - falta.getTime())/ MILLSECS_PER_DAY;
 							textFieldAnti.setText(Long.toString(diferencia));
 						}
-						else
-						{
+						else{
 							fbaja=formato.parse(aux1);
 							textFieldAnti.setText("0");
 						}
 						
-					} catch (ParseException ex)
-					{
+					} catch (ParseException ex){
 						ex.printStackTrace();
 					}
 					
@@ -747,9 +720,12 @@ public class AtsGui extends JFrame {
 			}
 				
 			}
-			
-			void Ponercampos(boolean valor)
-			{
+			/**
+			 * Pone los campos que queremos enabledo o editable de pendiendo de lo que se pase.
+			 * @param valor
+			 * 				Representa el estado Enable o Editable(true / false)
+			 */
+			void Ponercampos(boolean valor){
 				textFieldNomb.setEnabled(valor);
 				textFieldNomb.setEditable(valor);
 				textFieldApell.setEnabled(valor);
@@ -766,13 +742,16 @@ public class AtsGui extends JFrame {
 				dateChooser_1.setEnabled(valor);
 				dateChooser_2.setEnabled(valor);
 			}
-				/**
-				 * Compurueba que los campos no estén vacios
-				 * @param uno
-				 * @param dos
-				 * @param tres
-				 * @return
-				 */
+			/**
+			 * Comprueba que campos estan vacios o nulos
+			 * @param uno
+			 * 				Representa la fecha de nacimiento
+			 * @param dos
+			 * 				Representa la fecha de Alta
+			 * @param tres
+			 * 				Representa la fecha de fin de Contratacion
+			 * @return Devuelve un entero dependiendo de que campo esté vacio
+			 */
 				public int comprobar_campos(JDateChooser uno,JDateChooser dos, JDateChooser tres)
 				{
 					
@@ -801,9 +780,7 @@ public class AtsGui extends JFrame {
 		btnGuardar.setVisible(false);
 		
 		
-		/**
-		 * Boton que sirve para modificar un Ats
-		 */
+		
 		final JButton btnNewButton = new JButton("Modificar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -818,11 +795,12 @@ public class AtsGui extends JFrame {
 				
 			}
 			/**
-			 * habilita o deshabilita los campos dependiendo si se pasa true o false
+			 * Pone los campos que queremos enabledo o editable de pendiendo de lo que se pase
 			 * @param valor
+			 * 					Representa el estado Enbale o editable de los textField y combobox(true/false)
+			 * 			
 			 */
-			void Ponercampos(boolean valor)
-			{
+			void Ponercampos(boolean valor){
 				textFieldNomb.setEnabled(valor);
 				textFieldNomb.setEditable(valor);
 				textFieldApell.setEnabled(valor);
@@ -843,6 +821,15 @@ public class AtsGui extends JFrame {
 		btnNewButton.setBounds(239, 244, 89, 23);
 		contentPane.add(btnNewButton);
 		
+		JButton btnNewButton_1 = new JButton("Cerrar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		btnNewButton_1.setBounds(350, 265, 91, 23);
+		contentPane.add(btnNewButton_1);
+		
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnNewButton.setVisible(true);
@@ -853,9 +840,12 @@ public class AtsGui extends JFrame {
 				Ponercampos(false);
 				
 			}
-			
-			void Ponercampos(boolean valor)
-			{
+			/**
+			 * Pone los campos que queremos enabledo o editable de pendiendo de lo que se pase.
+			 * @param valor
+			 * 				Representa el estado Enbale o editable de los textField y combobox(true/false)
+			 */
+			void Ponercampos(boolean valor){
 				textFieldNomb.setEnabled(valor);
 				textFieldNomb.setEditable(valor);
 				textFieldApell.setEnabled(valor);
@@ -875,8 +865,7 @@ public class AtsGui extends JFrame {
 		});
 		
 		
-		switch (i)
-		{
+		switch (i){
 			case 10: btnCerrar_1.setVisible(false);	comboBox_3.setVisible(false);btnEliminarrrrr.setVisible(false);
 			  		 textFieldDniEliminar.setVisible(false);btnNewButtonAnnadir.setVisible(true);
 			  		 btnNewButtonAnt.setVisible(true);resetear(comboBox,comboBox_1,dateChooser,dateChooser_1,dateChooser_2);
@@ -940,8 +929,7 @@ public class AtsGui extends JFrame {
 			}catch (ParseException ex){
 				ex.printStackTrace();
 			}
-			if (un.getDiasTrabajados()>365)
-			{
+			if (un.getDiasTrabajados()>365){
 				JOptionPane.showMessageDialog(null,"\nEste especialista tiene en nómina +25%","!!!",JOptionPane.WARNING_MESSAGE);
 				
 				textField.setText(Float.toString(((un.nomina()*25)/100)+un.nomina()));
@@ -966,12 +954,18 @@ public class AtsGui extends JFrame {
 	
 	
 	/**
-	 * Pone los campos vacios
+	 * Borra los campos
 	 * @param uno
+	 * 				Representa el sexo
 	 * @param dos
+	 * 				Representa la especialidad
 	 * @param tres
+	 * 				Representa la fecha de fin de contratacion
+	 * 
 	 * @param doss
+	 * 				Representa la fecha de alta
 	 * @param unoo
+	 * 				Representa la fecha de nacimiento
 	 */
 	public void resetear(JComboBox uno, JComboBox dos, JDateChooser tres, JDateChooser doss, JDateChooser unoo){
 		textFieldDni.setText("");
@@ -988,6 +982,23 @@ public class AtsGui extends JFrame {
 		
 		
 	}
+	/**
+	 * Habilita o Deshabilita los campos
+	  * @param uno
+	 * 				Representa fecha de nacimiento
+	 * @param dos
+	 * 				Representa fecha de alta
+	 * @param tr
+	 * 				Representa fecha de fin de contratacion
+	 * @param un
+	 * 				Representa fecha de nacimiento
+	 * @param doses
+	 * 				Representa fecha de alta
+	 * @param tres
+	 * 				Representa fecha de fin de contratacion
+	 * @param valor
+	 * 				Representa el estado (editable o enable) de los textfield y combobox(true/false)
+	 */
 	public void modo_edicion(JComboBox uno, JComboBox dos,JComboBox tr,JDateChooser un, JDateChooser doses, JDateChooser tres, boolean valor){
 		textFieldDni.setEditable(valor);
 		textFieldNomb.setEnabled(valor);
@@ -1002,7 +1013,18 @@ public class AtsGui extends JFrame {
 		doses.setEnabled(valor);
 		tres.setEnabled(valor);
 	}
+	/**
+	 * Comprueba que los elementos del panel no esten vacios
+	 * @param uno
+	 * 				Representa la fecha de nacimiento
+	 * @param dos
+	 * 				Representa la fecha de Alta
+	 * @param tres
+	 * 				Representa la fecha de Fin de Contratacion
+	 * @return	Devuelve un entero 
+	 */
 	public int comprobar_campos(JDateChooser uno, JDateChooser dos, JDateChooser tres){
+		
 		if (textFieldDni.getText().compareTo("")==0)
 			return 1;
 		if (textFieldNomb.getText().compareTo("")==0)
@@ -1019,8 +1041,16 @@ public class AtsGui extends JFrame {
 			return 8;
 		if (dos==null)
 			return 9;
-		return 7;	
+		return 7;
+			
 	}
+	/**
+	 * Constructor, se utiliza para el alta de un ATS
+	 * @param listaEmpleados
+	 * 							Representa una lista de empleados
+	 * @param gestion
+	 * 							Representa el estado(true/false)
+	 */
 	public AtsGui(final ListaEmpleados listaEmpleados, final Gestion gestion) {
 		setTitle("Ats");
 		setBounds(100, 100, 450, 300);
@@ -1032,6 +1062,10 @@ public class AtsGui extends JFrame {
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(35, 43, 59, 14);
 		contentPane.add(lblNombre);
+		
+		JLabel tipo = new JLabel("Tipo");
+		tipo.setBounds(250, 100, 101, 20);
+		contentPane.add(tipo);
 		
 		JLabel lblApellidos = new JLabel("Apellidos");
 		lblApellidos.setBounds(35, 68, 49, 14);
@@ -1110,6 +1144,10 @@ public class AtsGui extends JFrame {
 		comboBoxSexo.setBounds(304, 75, 101, 20);
 		contentPane.add(comboBoxSexo);
 	
+		
+		
+		
+		
 		textFieldAnti = new JTextField();
 		textFieldAnti.setColumns(10);
 		textFieldAnti.setBounds(287, 170, 86, 20);
@@ -1118,7 +1156,7 @@ public class AtsGui extends JFrame {
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setEditable(true);
 		comboBox.setModel(new DefaultComboBoxModel(AtsEspecialidad.values()));
-		comboBox.setBounds(300, 65, 91, 20);
+		comboBox.setBounds(304, 100, 101, 20);
 		contentPane.add(comboBox);
 		
 		JLabel labelSalario = new JLabel("Fecha Nacimiento");
@@ -1131,7 +1169,7 @@ public class AtsGui extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnCerrar.setBounds(301, 211, 89, 23);
+		btnCerrar.setBounds(288, 228, 89, 23);
 		contentPane.add(btnCerrar);
 		
 		JButton btnNewButtonAnnadir = new JButton("A\u00F1adir");
@@ -1144,7 +1182,6 @@ public class AtsGui extends JFrame {
 					SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 					aux=formato.format(dateChooser.getDate());
 					aux1=formato.format(dateChooser_1.getDate());
-					
 					if (dateChooser_2.getDate()!=null)
 						aux2=formato.format(dateChooser_2.getDate());
 					else
@@ -1160,8 +1197,7 @@ public class AtsGui extends JFrame {
 							fbaja=formato.parse(aux2);
 							long diferencia = (fbaja.getTime() - falta.getTime())/ MILLSECS_PER_DAY;
 							textFieldAnti.setText(Long.toString(diferencia));
-						}
-						else{
+						}else{
 							fbaja=formato.parse(aux1);
 							textFieldAnti.setText("0");
 						}
@@ -1169,15 +1205,21 @@ public class AtsGui extends JFrame {
 					} catch (ParseException ex){
 						ex.printStackTrace();
 					}
-					Especialista e1 = new Especialista(textFieldDni.getText(),textFieldNomb.getText(),textFieldApell.getText(),comboBoxSexo.getSelectedItem().toString(),formato.format(fnac),textFieldDirecc.getText(),textFieldEmail.getText(),1,formato.format(falta),formato.format(fbaja),Integer.parseInt(textFieldAnti.getText()),true,comboBox.getSelectedItem().toString());
-					if (listaEmpleados.annadir(e1)){
-						gestion.setModificado(true);
-						JOptionPane.showMessageDialog(null,"\n Ats dado de alta correctamente","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-						
-					}else{
-						JOptionPane.showMessageDialog(null,"\nEl Ats ya esta dado de alta en el sistema.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-					}
 					
+					try {
+						listaEmpleados.comprobar_dni(textFieldDni.getText());
+						 listaEmpleados.comprobar_correo(textFieldEmail.getText());
+						Especialista e1 = new Especialista(textFieldDni.getText(),textFieldNomb.getText(),textFieldApell.getText(),comboBoxSexo.getSelectedItem().toString(),formato.format(fnac),textFieldDirecc.getText(),textFieldEmail.getText(),1,formato.format(falta),formato.format(fbaja),Integer.parseInt(textFieldAnti.getText()),true,comboBox.getSelectedItem().toString());
+						if (listaEmpleados.annadir(e1)){
+							gestion.setModificado(true);
+							JOptionPane.showMessageDialog(null,"\n Ats dado de alta correctamente","!!!Advertencia",JOptionPane.WARNING_MESSAGE);	
+						}
+						else{
+							JOptionPane.showMessageDialog(null,"\nEl Ats ya esta dado de alta en el sistema.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
+						}
+					}catch (DniNoValidoException  | CorreoNoValidoException e1) {	
+						;
+					}
 					try {
 						this.finalize();
 					} catch (Throwable e) {
@@ -1185,32 +1227,21 @@ public class AtsGui extends JFrame {
 						e.printStackTrace();
 					}
 				}
-				else
-				{
-					switch (i)
-					{
-					case 1:JOptionPane.showMessageDialog(null,"\nEl campo DNI no puede estar vacio.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-						break;
-					case 2:JOptionPane.showMessageDialog(null,"\nEl campo NOMBRE no puede estar vacio.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-						break;
-					case 3:JOptionPane.showMessageDialog(null,"\nEl campo APELLIDOS no puede estar vacio.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-						break;
-					case 4:JOptionPane.showMessageDialog(null,"\nEl campo DIRECCOIN no puede estar vacio","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-						break;
-					case 5:JOptionPane.showMessageDialog(null,"\nEl campo EMAIL no puede estar vacio","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-						break;
-					case 6:JOptionPane.showMessageDialog(null,"\nEl campo ANTIGUEDAD no puede estar vacio","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-						break;
-					case 8:JOptionPane.showMessageDialog(null,"\nEl campo FECHA DE NACIMIENTO no puede estar vacio","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-						break;
-					case 9:JOptionPane.showMessageDialog(null,"\nEl campo FECHA DE CONTRATACION no puede estar vacio","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-						break;
+				else{
+					switch (i){
+					case 1:JOptionPane.showMessageDialog(null,"\nEl campo DNI no puede estar vacio.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);break;
+					case 2:JOptionPane.showMessageDialog(null,"\nEl campo NOMBRE no puede estar vacio.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);break;
+					case 3:JOptionPane.showMessageDialog(null,"\nEl campo APELLIDOS no puede estar vacio.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);break;
+					case 4:JOptionPane.showMessageDialog(null,"\nEl campo DIRECCOIN no puede estar vacio","!!!Advertencia",JOptionPane.WARNING_MESSAGE);break;
+					case 5:JOptionPane.showMessageDialog(null,"\nEl campo EMAIL no puede estar vacio","!!!Advertencia",JOptionPane.WARNING_MESSAGE);break;
+					case 6:JOptionPane.showMessageDialog(null,"\nEl campo ANTIGUEDAD no puede estar vacio","!!!Advertencia",JOptionPane.WARNING_MESSAGE);break;
+					case 8:JOptionPane.showMessageDialog(null,"\nEl campo FECHA DE NACIMIENTO no puede estar vacio","!!!Advertencia",JOptionPane.WARNING_MESSAGE);break;
+					case 9:JOptionPane.showMessageDialog(null,"\nEl campo FECHA DE CONTRATACION no puede estar vacio","!!!Advertencia",JOptionPane.WARNING_MESSAGE);break;
 					}
 				}
 			}
-			
 		});
-		btnNewButtonAnnadir.setBounds(288, 228, 89, 23);
+		btnNewButtonAnnadir.setBounds(188, 228, 89, 23);
 		contentPane.add(btnNewButtonAnnadir);
 	}
 }

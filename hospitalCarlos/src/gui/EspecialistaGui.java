@@ -1,14 +1,9 @@
 package gui;
-
-
-import hospitalCarlos.Empleado;
 import hospitalCarlos.Especialista;
 import hospitalCarlos.Gestion;
 import hospitalCarlos.ListaEmpleados;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
+import hospitalCarlos.Sexo;
+import hospitalCarlos.EspecialidadEspecialista;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -17,32 +12,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-
-
-
 import javax.swing.JButton;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-import com.toedter.calendar.JCalendar;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import com.toedter.calendar.JDateChooser;
-
-import hospitalCarlos.Sexo;
-import hospitalCarlos.EspecialidadEspecialista;
-
+import expceciones.CorreoNoValidoException;
+import expceciones.DniNoValidoException;
+/**
+ * 
+ * @author Carlos Javier Garcia Escribano
+ * @version 1.0
+ */
 public class EspecialistaGui extends JFrame {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldDni;
@@ -53,7 +37,7 @@ public class EspecialistaGui extends JFrame {
 	private JTextField textFieldEmail;
 	
 	private int indice;
-	private int a=0;
+	
 	private int b = 0;
 	private JTextField textFieldDniEliminar;
 	private ListaEmpleados milista = new ListaEmpleados();
@@ -61,30 +45,12 @@ public class EspecialistaGui extends JFrame {
 	
 
 	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					Especialista frame = new Especialista(null);
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
-	 * Create the frame.
-	 * @wbp.parser.constructor
-	 */
-	/**
 	 * Devuelve una lista de empleados dependiendo de su especialidad que coincida con aux(especialidad)
 	 * @param le
+	 * 			Representa una lista de empleados
 	 * @param aux
-	 * @return
+	 * 			Representa Especialidad
+	 * @return ListaEmpleados
 	 */
 	public ListaEmpleados cargarlista(ListaEmpleados le,String aux)
 	{
@@ -101,13 +67,13 @@ public class EspecialistaGui extends JFrame {
 			return ml;
 		}
 		else
-			return null;//si no hay nada
+			return null;
 	}
-	
 	/**
-	
+	 * Devuelve una lista de Empleados
 	 * @param le
-	 * @return
+	 * 			Representa una lista de Empleados
+	 * @return listaEmpleados
 	 */
 	public ListaEmpleados ordenar(ListaEmpleados le)
 	{
@@ -139,9 +105,14 @@ public class EspecialistaGui extends JFrame {
 	/**
 	 * Se utiliza para la baja y consultas menos para la alta de Especialista
 	 * @param listaEmpleados
+	 * 							Representa una lista de Empleados
 	 * @param i
+	 * 			Representa el tipo de especialista
 	 * @param g
+	 * 			Representia si se ha modificado o no
 	 * @param l
+	 * 				Represneta la lista de Empleados
+	 * @wbp.parser.constructor
 	 */
 	public EspecialistaGui(final ListaEmpleados listaEmpleados, final int i, final Gestion g, final ListaEmpleados l) {
 	
@@ -190,22 +161,23 @@ public class EspecialistaGui extends JFrame {
 		contentPane.add(textFieldDni);
 		Especialista uno;
 		uno = (Especialista) listaEmpleados.get(0);
-
+		
+	
 		textField_1Nombre = new JTextField();
 		textField_1Nombre.setColumns(10);
 		textField_1Nombre.setBounds(231, 42, 189, 20);
 		contentPane.add(textField_1Nombre);
 		
+		
 		textFieldApell = new JTextField();
 		textFieldApell.setColumns(10);
 		textFieldApell.setBounds(66, 67, 354, 20);
 		contentPane.add(textFieldApell);
-	
+		
 		textFieldAntigue = new JTextField();
 		textFieldAntigue.setColumns(10);
 		textFieldAntigue.setBounds(323, 205, 37, 20);
 		contentPane.add(textFieldAntigue);
-		
 		
 		JLabel label_6 = new JLabel("Antiguedad");
 		label_6.setBounds(242, 208, 69, 14);
@@ -227,13 +199,13 @@ public class EspecialistaGui extends JFrame {
 		textFieldDirecci.setColumns(10);
 		textFieldDirecci.setBounds(66, 95, 354, 20);
 		contentPane.add(textFieldDirecci);
-		
+
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(66, 120, 126, 20);
 		contentPane.add(textFieldEmail);
-		
+
 		
 		final JDateChooser dateChooserFNaci = new JDateChooser();
 		dateChooserFNaci.setDateFormatString("dd/MM/yyyy");
@@ -241,14 +213,11 @@ public class EspecialistaGui extends JFrame {
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		
 		contentPane.add(dateChooserFNaci);
-		if(listaEmpleados.size() != 0)
-		{
-			try
-			{
+		if(listaEmpleados.size() != 0){
+			try{
 				dateChooserFNaci.setDate(formato.parse(uno.getfNacimiento()));
 			} 
-			catch (ParseException ex)
-			{
+			catch (ParseException ex){
 				ex.printStackTrace();
 			}
 		}
@@ -263,10 +232,8 @@ public class EspecialistaGui extends JFrame {
 		comboBox.setModel(new DefaultComboBoxModel(Sexo.values()));
 		comboBox.setBounds(319, 120, 101, 20);
 		contentPane.add(comboBox);
-		if (listaEmpleados.size()!=0)
-		{
-			switch (uno.getSexo())
-			{
+		if (listaEmpleados.size()!=0){
+			switch (uno.getSexo()){
 				case "HOMBRE": comboBox.setSelectedIndex(0); break;
 				case "MUJER": comboBox.setSelectedIndex(1);break;
 			}
@@ -280,17 +247,13 @@ public class EspecialistaGui extends JFrame {
 		dateChooserFcontra.setDateFormatString("dd/MM/yyyy");
 		dateChooserFcontra.setBounds(115, 177, 95, 20);
 		contentPane.add(dateChooserFcontra);
-		if(listaEmpleados.size() != 0)
-		{
-				try
-				{
+		if(listaEmpleados.size() != 0){
+				try{
 					dateChooserFcontra.setDate(formato.parse(uno.getFAlta()));
 				}
-				catch(ParseException ex)
-				{
+				catch(ParseException ex){
 					ex.printStackTrace();
 				}
-			
 			}
 		
 		
@@ -298,14 +261,11 @@ public class EspecialistaGui extends JFrame {
 		dateChooserFfinContr.setDateFormatString("dd/MM/yyyy");
 		dateChooserFfinContr.setBounds(125, 202, 95, 20);
 		contentPane.add(dateChooserFfinContr);
-		if(listaEmpleados.size() != 0)
-		{
-			try
-			{
+		if(listaEmpleados.size() != 0){
+			try{
 				dateChooserFfinContr.setDate(formato.parse(uno.getFBaja()));
 			}
-			catch (ParseException ex)
-			{
+			catch (ParseException ex){
 				ex.printStackTrace();
 			}
 		}
@@ -342,8 +302,7 @@ public class EspecialistaGui extends JFrame {
 		comboBox_2.setBounds(230, 8, 101, 20);
 		contentPane.add(comboBox_2);
 		
-		if (i==16)
-		{
+		if (i==16){
 			//Tengo que ordenar ascendente o descendente.
 			milista.cero();
 			// Voy a ordenador de menor a mayor, si el usuario pulsa menor tengo la lista
@@ -353,29 +312,19 @@ public class EspecialistaGui extends JFrame {
 		}
 		
 		
-		/**
-		 * Boton Siguiente
-		 */
+		
 		final JButton btnNewButtonAnnadir = new JButton("Siguiente");
 		btnNewButtonAnnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				/**
-				 * Boton Siguente, Muestrar por especialidad
-				 */
-				if (i==16)
-				{
+				if (i==16){
 					Especialista especialista2;
-					if (milista.size()!=0)
-					{
-						if (indice>=0 && indice<milista.size()-1)
-						{
+					if (milista.size()!=0){
+						if (indice>=0 && indice<milista.size()-1){
 							indice++;
 							especialista2=(Especialista) milista.get(indice);
-							asignarDatos(especialista2);
-							
+							asignarDatos(especialista2);	
 						}
-						else
-						{
+						else{
 							indice=milista.size()-1;
 							JOptionPane.showMessageDialog(null,"\nNo hay mas especialistas para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 						}
@@ -383,37 +332,31 @@ public class EspecialistaGui extends JFrame {
 					else
 						JOptionPane.showMessageDialog(null,"\nNo hay mas especialistas para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 				}
-				
 				/**
-				 * Boton Siguente, Mustrar por especialidad
+				 * Boton Siguiente, Muestra por Especialidad
 				 */
-				if (i==15)    
-				{
+				if (i==15){                                                                    
 					
 					milista.cero();
-					//Carga una lista con la especialidad seleccionada
 					milista = cargarlista(listaEmpleados,comboBox_2.getSelectedItem().toString());
 					
 					if(milista != null){
 						Especialista ats2 = new Especialista("a");
 						int x=0;						
-						//ats2 = (Especialista) milista.get(indice);
-						System.out.println("lista"+milista.size());
+						
+						
 						if(b <= milista.size()-1){
 							ats2 = (Especialista) milista.get(b);
 							asignarDatos(ats2);
 						}
-						//ats2 = (Especialista) milista.get(b);
 						
-						System.out.println("indice"+b);
-						//Recorre la lista hasta que obtenga un Especialista con la especialidad
+						
+					
 						while(b<milista.size()-1 && x==0){
 							b++;
 							ats2 = (Especialista) milista.get(b);
 							if(ats2.getEspe().compareTo(comboBox_2.getSelectedItem().toString())==0){
 								x=1;
-								//Cuando me encuetra al especialista con la especialidad cambia el valor
-								//de x para salir del bucle
 							}
 							
 						}
@@ -422,17 +365,18 @@ public class EspecialistaGui extends JFrame {
 							
 						}else{
 							b = milista.size()-1;
-							JOptionPane.showMessageDialog(null,"\nNo hay mas Especialistas para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 						}
 						
 					}else{
-						JOptionPane.showMessageDialog(null,"\nNo hay mas Especialistas para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null,"\nNo hay mas ats para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 					}
 				}
 				/**
-				 * Boton Siguiente, Muestra todos los Ats || Muestra la nomina de loas Ats
+				 * Boton Siguiente, Muestra Todos || Muestra por nomina
 				 */
-				if(i==14 || i==17)  {
+				if(i==14 || i==17)                                             
+				{
 				if(indice < listaEmpleados.size()-1){
 					Especialista especialista2 = new Especialista("a");
 					indice++;
@@ -440,11 +384,9 @@ public class EspecialistaGui extends JFrame {
 					especialista2 = (Especialista) listaEmpleados.devolver(indice);
 					
 					asignarDatos(especialista2);
-					if (i==17)
-					{
+					if (i==17){
 						textField.setText(Float.toString(especialista2.nomina()));
-						if (especialista2.getDiasTrabajados()>365)
-						{
+						if (especialista2.getDiasTrabajados()>365){
 							JOptionPane.showMessageDialog(null,"\nEste especialista tiene en nómina +25%","!!!",JOptionPane.WARNING_MESSAGE);
 							
 							textField.setText(Float.toString(((especialista2.nomina()*25)/100)+especialista2.nomina()));
@@ -454,36 +396,35 @@ public class EspecialistaGui extends JFrame {
 					indice=listaEmpleados.size()-1;
 					
 					 JOptionPane.showMessageDialog(null,"\nNo hay mas especialistas para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
-				}}
+				}
+				}
 				/**
-				 * Boton Siguente, Muestra por Sexo
+				 * Boton Siguiente, Muestra por Sexo
 				 */
-				if(i == 10)
-				{
+				if(i == 10){
 					Especialista especialista2;
 					especialista2 = (Especialista) listaEmpleados.devolver(indice);
 					int h = 0;
-					while(indice<=listaEmpleados.size()-1 && h==0)
-					{
+					while(indice<=listaEmpleados.size()-1 && h==0){
 						
 						especialista2 = (Especialista) listaEmpleados.devolver(indice);
-						if(especialista2.getSexo().compareTo(comboBox_1.getSelectedItem().toString())==0)
-						{
+						if(especialista2.getSexo().compareTo(comboBox_1.getSelectedItem().toString())==0){
 							h = 1;
 							asignarDatos(especialista2);
-							
 						}
 						indice++;	
 					}
-					if (indice>listaEmpleados.size()-1)
-					{
+					if (indice>listaEmpleados.size()-1){
 						indice=listaEmpleados.size()-1;
 						JOptionPane.showMessageDialog(null,"\nNo hay mas especialistas para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
 					}
 				}
 				
 			}
-
+			/**
+			 * Asignar a los textField, comboBox  y dateChooser los datos que contiene Especialista2
+			 * @param especialista2
+			 */
 			private void asignarDatos(Especialista especialista2) {
 				textFieldDni.setText(especialista2.getDni());
 				textField_1Nombre.setText(especialista2.getNombre());
@@ -492,11 +433,13 @@ public class EspecialistaGui extends JFrame {
 				textFieldEmail.setText(especialista2.getEmail());
 				textFieldAntigue.setText(Integer.toString(especialista2.getDiasTrabajados()));//reajustarlo
 
-				switch (especialista2.getSexo())
-				{
-					case "HOMBRE": comboBox.setSelectedIndex(0); break;
-					case "MUJER": comboBox.setSelectedIndex(1);break;
+				switch (especialista2.getSexo()){
+					case "HOMBRE": comboBox.setSelectedIndex(0); 
+						break;
+					case "MUJER": comboBox.setSelectedIndex(1);
+						break;
 				}
+				
 				switch(especialista2.getEspe()){
 				case "PEDIATRIA":
 					comboBoxEspecial.setSelectedIndex(0);
@@ -513,9 +456,9 @@ public class EspecialistaGui extends JFrame {
 				}
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				try{
-				dateChooserFNaci.setDate(formato.parse(especialista2.getfNacimiento()));
-				dateChooserFcontra.setDate(formato.parse(especialista2.getFAlta()));
-				dateChooserFfinContr.setDate(formato.parse(especialista2.getFBaja()));
+					dateChooserFNaci.setDate(formato.parse(especialista2.getfNacimiento()));
+					dateChooserFcontra.setDate(formato.parse(especialista2.getFAlta()));
+					dateChooserFfinContr.setDate(formato.parse(especialista2.getFBaja()));
 				}catch (ParseException ex){
 					ex.printStackTrace();
 				}
@@ -531,7 +474,7 @@ public class EspecialistaGui extends JFrame {
 		btnNewButtonAnt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				/**
-				 * Boton Anterior, Muestra por Antiguedad
+				 * Boton Anterio, Muestra por Antiguedad
 				 */
 				if (i==16)
 				{
@@ -566,8 +509,7 @@ public class EspecialistaGui extends JFrame {
 				/**
 				 * Boton Anterior, Muestra por Especialidad
 				 */
-				if (i==15)  
-				{
+				if (i==15) {
 					milista.cero();
 					milista = cargarlista(listaEmpleados,comboBox_2.getSelectedItem().toString());
 					if(milista != null){
@@ -601,10 +543,9 @@ public class EspecialistaGui extends JFrame {
 					}
 				}
 				/**
-				 * Boton anterior, Muestra por Sexo
+				 * Boton Anterior, Muestra por Sexo
 				 */
-				if(i == 10)
-				{
+				if(i == 10){
 					Especialista especialista2;
 					
 					
@@ -628,7 +569,7 @@ public class EspecialistaGui extends JFrame {
 					}
 				}
 				/**
-				 * Boton Anterior, 14- Muestra Todos || 17- Muestra Nomina
+				 * Boton Anterior, Muestra Todos || Obtener nomina
 				 */
 				if(i==14 || i==17)
 				{
@@ -639,19 +580,16 @@ public class EspecialistaGui extends JFrame {
 					
 					especialista2 = (Especialista) listaEmpleados.devolver(indice);
 					asignarDatos(especialista2);
-					if (i==17)
-					{
+					if (i==17){
 						textField.setText(Float.toString(especialista2.nomina()));
-						if (especialista2.getDiasTrabajados()>365)
-						{
+						if (especialista2.getDiasTrabajados()>365){
 							JOptionPane.showMessageDialog(null,"\nEste especialista tiene en nómina +25%","!!!",JOptionPane.WARNING_MESSAGE);
 						
 							textField.setText(Float.toString(((especialista2.nomina()*25)/100)+especialista2.nomina()));
 						}
 					}
 				}
-				else
-				{
+				else{
 					indice=0;
 					
 					 JOptionPane.showMessageDialog(null,"\nNo hay mas especialistas para mostrar","!!!",JOptionPane.WARNING_MESSAGE);
@@ -660,32 +598,32 @@ public class EspecialistaGui extends JFrame {
 			
 			
 			}
-			private void asignarDatos(Especialista especialista2) 
-			{
+			/**
+			 * Asignar a los textField, comboBox  y dateChooser los datos que contiene especialista2
+			 * @param especialista2
+			 */
+			private void asignarDatos(Especialista especialista2) {
 				textFieldDni.setText(especialista2.getDni());
 				textField_1Nombre.setText(especialista2.getNombre());
 				textFieldApell.setText(especialista2.getApellidos());
 				textFieldDirecci.setText(especialista2.getDireccion());
 				textFieldEmail.setText(especialista2.getEmail());
 				textFieldAntigue.setText(Integer.toString(especialista2.getDiasTrabajados()));
+				
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-				try
-				{
-				dateChooserFNaci.setDate(formato.parse(especialista2.getfNacimiento()));
-				dateChooserFcontra.setDate(formato.parse(especialista2.getFAlta()));
-				dateChooserFfinContr.setDate(formato.parse(especialista2.getFBaja()));
+				try{
+					dateChooserFNaci.setDate(formato.parse(especialista2.getfNacimiento()));
+					dateChooserFcontra.setDate(formato.parse(especialista2.getFAlta()));
+					dateChooserFfinContr.setDate(formato.parse(especialista2.getFBaja()));
 				}
-				catch (ParseException ex)
-				{
+				catch (ParseException ex){
 					ex.printStackTrace();
 				}
-				switch (especialista2.getSexo())
-				{
+				switch (especialista2.getSexo()){
 					case "HOMBRE": comboBox.setSelectedIndex(0); break;
 					case "MUJER": comboBox.setSelectedIndex(1);break;
 				}
-				switch(especialista2.getEspe())
-				{
+				switch(especialista2.getEspe()){
 				case "PEDIATRIA":
 					comboBoxEspecial.setSelectedIndex(0);
 					break;
@@ -708,24 +646,17 @@ public class EspecialistaGui extends JFrame {
 		btnNewButtonAnt.setBounds(125, 247, 89, 23);
 		contentPane.add(btnNewButtonAnt);
 		
-		/**
-		 * Boton Eliminar Especialista
-		 */
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Especialista e1 = new Especialista(textFieldDniEliminar.getText());				
-				if(listaEmpleados.devolverDni(textFieldDniEliminar.getText()) != null)
-				{
+				Especialista e1 = new Especialista(textFieldDniEliminar.getText());				//textFieldDni.getText(), textField_1Nombre.getText(), textFieldApell.getText(), comboBoxSexo.getSelectedItem().toString(),dateChooserFNaci.toString()	 ,textFieldDirecci.getText(), textFieldEmail.getText(),  0,dateChooserFcontra.toString(),dateChooserFfinContr.toString(),5,true,comboBoxEspecial.getSelectedItem().toString());
+				if(listaEmpleados.devolverDni(textFieldDniEliminar.getText()) != null){
 					Especialista e2 = (Especialista) listaEmpleados.devolverDni(textFieldDniEliminar.getText());
-					if (e2.getEspe().compareTo("PEDIATRIA")==0 || e2.getEspe().compareTo("NEUROLOGIA")==0 || e2.getEspe().compareTo("OFTALMOLOGIA")==0 || e2.getEspe().compareTo("RADIOLOGIA")==0)
-					{
+					if (e2.getEspe().compareTo("PEDIATRIA")==0 || e2.getEspe().compareTo("NEUROLOGIA")==0 || e2.getEspe().compareTo("OFTALMOLOGIA")==0 || e2.getEspe().compareTo("RADIOLOGIA")==0){
 						asignarDatos(e2);
-						if(JOptionPane.showOptionDialog(contentPane,"¿Quieres eliminar el Especialista?", "--> Confirmar",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE, null, null, null)==0)
-						{
+						if(JOptionPane.showOptionDialog(contentPane,"¿Quieres eliminar el Especialista?", "--> Confirmar",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE, null, null, null)==0){
 					
-							if(listaEmpleados.eliminar(e2))
-							{
+							if(listaEmpleados.eliminar(e2)){
 								g.setModificado(true);
 								resetear(comboBox, comboBoxEspecial);
 							}
@@ -736,7 +667,10 @@ public class EspecialistaGui extends JFrame {
 				}
 				
 			}
-
+			/**
+			 * Asignar a los textField, comboBox  y dateChooser los datos que contiene especialista2
+			 * @param especialista2
+			 */
 			private void asignarDatos(Especialista especialista2) {
 				textFieldDni.setText(especialista2.getDni());
 				textField_1Nombre.setText(especialista2.getNombre());
@@ -744,29 +678,27 @@ public class EspecialistaGui extends JFrame {
 				textFieldDirecci.setText(especialista2.getDireccion());
 				textFieldEmail.setText(especialista2.getEmail());
 				textFieldAntigue.setText(Integer.toString(especialista2.getDiasTrabajados()));//reajustarlo
-				switch (especialista2.getSexo())
-				{
+				switch (especialista2.getSexo()){
 					case "HOMBRE": comboBox.setSelectedIndex(0); break;
 					case "MUJER": comboBox.setSelectedIndex(1);break;
 				}
 				switch(especialista2.getEspe()){
-				case "PEDIATRIA":
-					comboBoxEspecial.setSelectedIndex(0);
-					break;
-				case "NEUROLOGIA":
-					comboBoxEspecial.setSelectedIndex(1);
-					break;
-				case "OFTALMOLOGIA":
-					comboBoxEspecial.setSelectedIndex(2);
-					break;
-				case "RADIOLOGIA":
-					comboBoxEspecial.setSelectedIndex(3);
-					break;
+					case "PEDIATRIA":
+						comboBoxEspecial.setSelectedIndex(0);
+						break;
+					case "NEUROLOGIA":
+						comboBoxEspecial.setSelectedIndex(1);
+						break;
+					case "OFTALMOLOGIA":
+						comboBoxEspecial.setSelectedIndex(2);
+						break;
+					case "RADIOLOGIA":
+						comboBoxEspecial.setSelectedIndex(3);
+						break;
 				}
 				textField.setText(Float.toString(especialista2.nomina()));
-				if (especialista2.getDiasTrabajados()>365)
-				{
-					JOptionPane.showMessageDialog(null,"\nEste Especialista tiene en nómina +25%","!!!",JOptionPane.WARNING_MESSAGE);
+				if (especialista2.getDiasTrabajados()>365){
+					JOptionPane.showMessageDialog(null,"\nEste enfermero tiene en nómina +25%","!!!",JOptionPane.WARNING_MESSAGE);
 					textField.setText(Float.toString(((especialista2.nomina()*25)/100)+especialista2.nomina()));
 				}
 				
@@ -805,19 +737,17 @@ public class EspecialistaGui extends JFrame {
 		contentPane.add(btnCancelar);
 		btnCancelar.setVisible(false);
 		
-		/**
-		 * Boton Guardar, Especialista
-		 */
+		final JButton btnNewButton = new JButton("Modificar");
 		final JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Especialista uno;
 				uno = (Especialista) listaEmpleados.devolverDni(textFieldDni.getText().toString());
-				
+				//uno = (Especialista) listaEmpleados.copiar(uno);
 				int i=0;			
 				i=comprobar_campos(dateChooserFNaci,dateChooserFcontra,dateChooserFfinContr);
-				if (i==7)//Comprueba que todos los campos tienen datos
-				{
+				if (i==7){//Comprueba que todos los campos tienen datos
+	
 					String aux,aux1,aux2;
 					SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 					aux=formato.format(dateChooserFNaci.getDate());
@@ -833,39 +763,43 @@ public class EspecialistaGui extends JFrame {
 						//El string lo devuelve de tipo date
 						fnac=formato.parse(aux);
 						falta=formato.parse(aux1);
-						if (aux2!=null)
-						{
+						if (aux2!=null){
 							final long MILLSECS_PER_DAY = 24*60*60*1000;
 							fbaja=formato.parse(aux2);
 							long diferencia = (fbaja.getTime() - falta.getTime())/ MILLSECS_PER_DAY;
 							textFieldAntigue.setText(Long.toString(diferencia));
 						}
-						else
-						{
+						else{
 							fbaja=formato.parse(aux1);
 							textFieldAntigue.setText("0");
 						}
 						
-					} catch (ParseException ex)
-					{
+					}catch (ParseException ex){
 						ex.printStackTrace();
 					}
 					
-					
-					Especialista e2 = new Especialista(textFieldDni.getText(),textField_1Nombre.getText(),textFieldApell.getText(),comboBox.getSelectedItem().toString(),formato.format(fnac),textFieldDirecci.getText(),textFieldEmail.getText(),1,formato.format(falta),formato.format(fbaja),Integer.parseInt(textFieldAntigue.getText()),true,comboBoxEspecial.getSelectedItem().toString());
-					
-					listaEmpleados.eliminar(uno);
-					listaEmpleados.annadir(e2);
-					l.eliminar(uno);
-					l.annadir(e2);
-					g.setModificado(true);
-					JOptionPane.showMessageDialog(null,"\n ENFERMERO MODIFICADO CORRECTAMENTE.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-					btnCerrar_1.setVisible(false);
-					btnNewButtonAnt.setVisible(true);
-					btnNewButtonAnnadir.setVisible(true);
-					btnGuardar.setVisible(false);
-					Ponercampos(false);
-					btnCancelar.setVisible(false);
+					try{
+						listaEmpleados.comprobar_correo(textFieldEmail.getText());
+						Especialista e2 = new Especialista(textFieldDni.getText(),textField_1Nombre.getText(),textFieldApell.getText(),comboBox.getSelectedItem().toString(),formato.format(fnac),textFieldDirecci.getText(),textFieldEmail.getText(),1,formato.format(falta),formato.format(fbaja),Integer.parseInt(textFieldAntigue.getText()),true,comboBoxEspecial.getSelectedItem().toString());
+						
+						listaEmpleados.eliminar(uno);
+						listaEmpleados.annadir(e2);
+						l.eliminar(uno);
+						l.annadir(e2);
+						g.setModificado(true);
+						JOptionPane.showMessageDialog(null,"\n ENFERMERO MODIFICADO CORRECTAMENTE.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
+						btnCerrar_1.setVisible(false);
+						btnNewButtonAnt.setVisible(true);
+						btnNewButtonAnnadir.setVisible(true);
+						btnGuardar.setVisible(false);
+						Ponercampos(false);
+						btnCancelar.setVisible(false);
+						btnNewButton.setVisible(true);
+						
+					} catch (CorreoNoValidoException e1) {
+						// TODO Auto-generated catch block
+						;
+					}
 			}
 				
 			}
@@ -873,8 +807,7 @@ public class EspecialistaGui extends JFrame {
 			 * Pone los campos que queremos enabledo o editable de pendiendo de lo que se pase.
 			 * @param valor
 			 */
-			void Ponercampos(boolean valor)
-			{
+			void Ponercampos(boolean valor){
 				textField_1Nombre.setEnabled(valor);
 				textField_1Nombre.setEditable(valor);
 				textFieldApell.setEnabled(valor);
@@ -894,12 +827,14 @@ public class EspecialistaGui extends JFrame {
 			/**
 			 * Comprueba que campos estan vacios o nulos
 			 * @param uno
+			 * 				Representa la fecha de nacimiento
 			 * @param dos
+			 * 				Representa la fecha de Alta
 			 * @param tres
-			 * @return
+			 * 				Representa la fecha de fin de contratacion
+			 * @return Entero 
 			 */
-				public int comprobar_campos(JDateChooser uno,JDateChooser dos, JDateChooser tres)
-				{
+			public int comprobar_campos(JDateChooser uno,JDateChooser dos, JDateChooser tres){
 					
 					if (textFieldDni.getText().compareTo("")==0)
 						return 1;
@@ -926,28 +861,23 @@ public class EspecialistaGui extends JFrame {
 		btnGuardar.setVisible(false);
 		
 		
-		/**
-		 * Boton que sirve para modificar un Especialista
-		 */
-		final JButton btnNewButton = new JButton("Modificar");
+		
+
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 					btnNewButton.setVisible(false);
 					btnGuardar.setVisible(true);
 					btnNewButtonAnt.setVisible(false);
 					btnNewButtonAnnadir.setVisible(false);
 					btnCancelar.setVisible(true);
-					
 					Ponercampos(true);
-				
 			}
 			/**
 			 * Pone los campos que queremos enabledo o editable de pendiendo de lo que se pase.
 			 * @param valor
+			 * 				Representa el estado (editable o enable) de los textfield y combobox(true/false)
 			 */
-			void Ponercampos(boolean valor)
-			{
+			void Ponercampos(boolean valor){
 				textField_1Nombre.setEnabled(valor);
 				textField_1Nombre.setEditable(valor);
 				textFieldApell.setEnabled(valor);
@@ -968,8 +898,15 @@ public class EspecialistaGui extends JFrame {
 		btnNewButton.setBounds(223, 244, 89, 23);
 		contentPane.add(btnNewButton);
 		
+		JButton button = new JButton("Cerrar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		button.setBounds(329, 279, 91, 23);
+		contentPane.add(button);
 		
-		//Boton cancelar
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnNewButton.setVisible(true);
@@ -983,9 +920,9 @@ public class EspecialistaGui extends JFrame {
 			/**
 			 * Pone los campos que queremos enabledo o editable de pendiendo de lo que se pase.
 			 * @param valor
+			 * 					Representa el estado (editable o enable) de los textfield y combobox(true/false)
 			 */
-			void Ponercampos(boolean valor)
-			{
+			void Ponercampos(boolean valor){
 				textField_1Nombre.setEnabled(valor);
 				textField_1Nombre.setEditable(valor);
 				textFieldApell.setEnabled(valor);
@@ -1003,10 +940,10 @@ public class EspecialistaGui extends JFrame {
 				dateChooserFcontra.setEnabled(valor);
 			}
 		});
-		
-		if(i==10)  // Consultar por sexo.
-		{
-			
+		/**
+		 * Consulta por Sexo
+		 */
+		if(i==10){                                    
 			indice++;
 			btnCerrar_1.setVisible(false);
 			lblDni.setVisible(false);
@@ -1020,8 +957,10 @@ public class EspecialistaGui extends JFrame {
 			textField.setVisible(true);
 			
 		}
-		if(i==12){  // Baja de especialista.
-			
+		/**
+		 * Baja de Especialista
+		 */
+		if(i==12){
 			btnNewButton.setVisible(false);
 			btnCerrar_1.setVisible(true);
 			lblDni.setVisible(true);
@@ -1041,9 +980,11 @@ public class EspecialistaGui extends JFrame {
 			textField.setVisible(true);
 			modo_edicion(comboBox,comboBox_1,comboBoxEspecial,dateChooserFNaci,dateChooserFcontra,dateChooserFfinContr,false);
 		}
-		if (i==14)  	// Consultar todos.
-		{
-		
+		/**
+		 * Consulta Todos
+		 */
+		if (i==14){                                  
+			
 			btnCerrar_1.setVisible(false);
 			lblDni.setVisible(false);
 			btnEliminar.setVisible(false);
@@ -1063,8 +1004,10 @@ public class EspecialistaGui extends JFrame {
 			textField.setVisible(false);
 			modo_edicion(comboBox,comboBox_1,comboBoxEspecial,dateChooserFNaci,dateChooserFcontra,dateChooserFfinContr,false);
 		}
-		if (i==15)   // Consultar por especialidad.
-		{
+		/**
+		 * Consulta por Especialidad
+		 */
+		if (i==15){ 								
 			
 			btnCerrar_1.setVisible(false);
 			lblDni.setVisible(false);
@@ -1086,8 +1029,10 @@ public class EspecialistaGui extends JFrame {
 			textField.setVisible(true);
 			modo_edicion(comboBox,comboBox_1,comboBoxEspecial,dateChooserFNaci,dateChooserFcontra,dateChooserFfinContr,false);
 		}
-		if (i==16)  // Consulta por antiguedad.
-		{
+		/**
+		 * Consulta por Antiguedad
+		 */
+		if (i==16){					
 			
 			btnCerrar_1.setVisible(false);
 			lblDni.setVisible(false);
@@ -1109,8 +1054,10 @@ public class EspecialistaGui extends JFrame {
 			textField.setVisible(true);
 			modo_edicion(comboBox,comboBox_1,comboBoxEspecial,dateChooserFNaci,dateChooserFcontra,dateChooserFfinContr,false);
 		}
-		if (i==17)
-		{
+		/**
+		 * Obtener nominas
+		 */
+		if (i==17){
 			// Toca obtener la nómina para cada empleado.
 			// Consultar todos.
 			btnCerrar_1.setVisible(false);
@@ -1146,49 +1093,51 @@ public class EspecialistaGui extends JFrame {
 			textFieldDirecci.setText(un.getDireccion());
 			textFieldEmail.setText(un.getEmail());
 			textFieldAntigue.setText(Integer.toString(un.getDiasTrabajados()));
-			//indice++;
+			
 			if(un.getSexo()=="HOMBRE")
 				comboBox.setSelectedIndex(0);
 			else
 				comboBox.setSelectedIndex(1);
 			switch(un.getEspe()){
-			case "PEDIATRIA":
-				comboBoxEspecial.setSelectedIndex(0);
-				break;
-			case "NEUROLOGIA":
-				comboBoxEspecial.setSelectedIndex(1);
-				break;
-			case "OFTALMOLOGIA":
-				comboBoxEspecial.setSelectedIndex(2);
-				break;
-			case "RADIOLOGIA":
-				comboBoxEspecial.setSelectedIndex(3);
-				break;
+				case "PEDIATRIA":
+					comboBoxEspecial.setSelectedIndex(0);
+					break;
+				case "NEUROLOGIA":
+					comboBoxEspecial.setSelectedIndex(1);
+					break;
+				case "OFTALMOLOGIA":
+					comboBoxEspecial.setSelectedIndex(2);
+					break;
+				case "RADIOLOGIA":
+					comboBoxEspecial.setSelectedIndex(3);
+					break;
 			}
 			textField.setText(Float.toString(un.nomina()));
-			if (un.getDiasTrabajados()>365)
-			{
+			if (un.getDiasTrabajados()>365){
 				JOptionPane.showMessageDialog(null,"\nEste especialista tiene en nómina +25%","!!!",JOptionPane.WARNING_MESSAGE);
 				textField.setText(Float.toString(((un.nomina()*25)/100)+un.nomina()));
 			}
 		}
-		
-		
-		
 	}
 	
 	/**
 	 * habilita o deshabilita los campos
 	 * @param uno
+	 * 				Representa fecha de nacimiento
 	 * @param dos
+	 * 				Representa fecha de alta
 	 * @param tr
+	 * 				Representa fecha de fin de contratacion
 	 * @param un
+	 * 				Representa fecha de nacimiento
 	 * @param doses
+	 * 				Representa fecha de alta
 	 * @param tres
+	 * 				Representa fecha de fin de contratacion
 	 * @param valor
+	 * 				Representa el estado (editable o enable) de los textfield y combobox(true/false)
 	 */
-	public void modo_edicion(JComboBox uno, JComboBox dos,JComboBox tr,JDateChooser un, JDateChooser doses, JDateChooser tres, boolean valor)
-	{
+	public void modo_edicion(JComboBox uno, JComboBox dos,JComboBox tr,JDateChooser un, JDateChooser doses, JDateChooser tres, boolean valor){
 		textFieldDni.setEditable(valor);
 		textField_1Nombre.setEnabled(valor);
 		textFieldApell.setEnabled(valor);
@@ -1202,11 +1151,12 @@ public class EspecialistaGui extends JFrame {
 		doses.setEnabled(valor);
 		tres.setEnabled(valor);
 	}
-	
 	/**
 	 * Borra los campos
 	 * @param uno
+	 * 			Representa fecha de alta
 	 * @param dos
+	 * 			Representa fecha fin de contratacion
 	 */
 	public void resetear(JComboBox uno, JComboBox dos){
 		textFieldDni.setText("");
@@ -1217,23 +1167,21 @@ public class EspecialistaGui extends JFrame {
 		textFieldAntigue.setText("");
 		dos.setSelectedIndex(0);
 		uno.setSelectedIndex(0);
-		
-		
 	}
-	
 	/**
 	 * Comprueba que los elementos del panel no esten vacios
 	 * @param uno
+	 * 				Representa Fecha de Nacimiento
 	 * @param dos
+	 * 				Representa fecha de Alta
 	 * @param tres
-	 * @return
+	 * 				Representa fech de Fin de Contratacion
+	 * @return Entero
 	 */
-	public int comprobar_campos(JDateChooser uno, JDateChooser dos, JDateChooser tres)
-	//Tres no se comprueba porque puede ser que un empleado no tenga fecha de baja.
-	{
+	public int comprobar_campos(JDateChooser uno, JDateChooser dos, JDateChooser tres){
 		
 		if (textFieldDni.getText().compareTo("")==0)
-			return 1;//No hay datos en el campo dni
+			return 1;
 		if (textField_1Nombre.getText().compareTo("")==0)
 			return 2;
 		if (textFieldApell.getText().compareTo("")==0)
@@ -1248,19 +1196,17 @@ public class EspecialistaGui extends JFrame {
 			return 8;
 		if (dos==null)
 			return 9;
-		return 7;//Significa que no hay ningun problema, hay datos
-			
+		return 7;	
 	}
 	/**
-	 * Se utiliza para el alta
+	 * Constructor EspecialistaGui, se utiliza para el Alta de Especialistas
 	 * @param listaEmpleados
+ * 							Representa la lista de Empleados
 	 * @param g
+	 * 						Rerepsenta si se ha modificado o no
 	 */
 	public EspecialistaGui(final ListaEmpleados listaEmpleados, Gestion g) {
-		
-		
 		setTitle("Especialista");
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -1366,85 +1312,71 @@ public class EspecialistaGui extends JFrame {
 		comboBoxEspecial.setBounds(304, 106, 101, 20);
 		contentPane.add(comboBoxEspecial);
 		
-		/**
-		 * Boton Cerrar
-		 */
 		JButton btnCerrar = new JButton("Cerrar");
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 			}
 		});
-		btnCerrar.setBounds(301, 211, 89, 23);
+		
+		btnCerrar.setBounds(301, 228, 89, 23);
 		contentPane.add(btnCerrar);
 		
-		/**
-		 * Boton que añade un Especialista
-		 */
 		JButton btnNewButtonAnnadir = new JButton("A\u00F1adir");
 		btnNewButtonAnnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int i=0;			
 				i=comprobar_campos(dateChooserFNaci,dateChooserFcontra,dateChooserFfinContr);
-				if (i==7)//Hay datos 
-				{
+				if (i==7){
 					String aux,aux1,aux2;
 					SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-					aux=formato.format(dateChooserFNaci.getDate());//Paso la fecha a String
+					aux=formato.format(dateChooserFNaci.getDate());
 					aux1=formato.format(dateChooserFcontra.getDate());
-					if (dateChooserFfinContr.getDate()!=null){
+					if (dateChooserFfinContr.getDate()!=null)
 						aux2=formato.format(dateChooserFfinContr.getDate());
-					}else
+					else
 						aux2=null;
-					
 					Date fnac= null;
 					Date falta = null;
 					Date fbaja= null;
 					try{
-						fnac=formato.parse(aux);//Paso el String a Date.
+						fnac=formato.parse(aux);
 						falta=formato.parse(aux1);
-						if (aux2!=null)
-						{
-							final long MILLSECS_PER_DAY = 24*60*60*1000;//Calcular el numero de dias entre Alta y baja
+						
+						if (aux2!=null){
+							final long MILLSECS_PER_DAY = 24*60*60*1000;
 							fbaja=formato.parse(aux2);
 							long diferencia = (fbaja.getTime() - falta.getTime())/ MILLSECS_PER_DAY;
 							textFieldAntigue.setText(Long.toString(diferencia));
 						}
-						else
-						{
+						else{
 							fbaja=formato.parse(aux1);
 							textFieldAntigue.setText("0");
 						}
 						
-					} catch (ParseException ex)
-					{
+					} catch (ParseException ex){
 						ex.printStackTrace();
-					}
-					;
+					};
 					
-					Especialista e1 = new Especialista(textFieldDni.getText(),textField_1Nombre.getText(),textFieldApell.getText(),comboBox.getSelectedItem().toString(),formato.format(fnac),textFieldDirecci.getText(),textFieldEmail.getText(),1,formato.format(falta),formato.format(fbaja),Integer.parseInt(textFieldAntigue.getText()),true,comboBoxEspecial.getSelectedItem().toString());
-					if (listaEmpleados.annadir(e1))
-					{
-						Gestion.setModificado(true);
-						JOptionPane.showMessageDialog(null,"\nEspecialista dado de alta correctamente","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-						
-					}
-					else
-					{
-						JOptionPane.showMessageDialog(null,"\nEl especialista ya esta dado de alta en el sistema.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
-					}
 					try {
-						this.finalize();
-					} catch (Throwable e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						 listaEmpleados.comprobar_dni(textFieldDni.getText());
+						 listaEmpleados.comprobar_correo(textFieldEmail.getText());
+						 Especialista e1 = new Especialista(textFieldDni.getText(),textField_1Nombre.getText(),textFieldApell.getText(),comboBox.getSelectedItem().toString(),formato.format(fnac),textFieldDirecci.getText(),textFieldEmail.getText(),1,formato.format(falta),formato.format(fbaja),Integer.parseInt(textFieldAntigue.getText()),true,comboBoxEspecial.getSelectedItem().toString());
+						
+						 if (listaEmpleados.annadir(e1)) {
+							 Gestion.setModificado(true);
+							 JOptionPane.showMessageDialog(null,"\nEspecialista dado de alta correctamente","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
+						 }
+						 else {
+							 JOptionPane.showMessageDialog(null,"\nEl especialista ya esta dado de alta en el sistema.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);
+						 }
+						 
+					} catch (DniNoValidoException  | CorreoNoValidoException e1) {	
+							;
 					}
 				}
-				else
-				{
-					//Comprueba que campo está vacio
-					switch (i)
-					{
+				else{
+					switch (i){
 					case 1:JOptionPane.showMessageDialog(null,"\nEl campo DNI no puede estar vacio.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);break;
 					case 2:JOptionPane.showMessageDialog(null,"\nEl campo NOMBRE no puede estar vacio.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);break;
 					case 3:JOptionPane.showMessageDialog(null,"\nEl campo APELLIDOS no puede estar vacio.","!!!Advertencia",JOptionPane.WARNING_MESSAGE);break;
@@ -1457,7 +1389,7 @@ public class EspecialistaGui extends JFrame {
 				}
 			}
 		});
-		btnNewButtonAnnadir.setBounds(288, 228, 89, 23);
+		btnNewButtonAnnadir.setBounds(188, 228, 89, 23);
 		contentPane.add(btnNewButtonAnnadir);
 		
 	}
